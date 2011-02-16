@@ -1,10 +1,13 @@
 {
     "name" : "dnode",
-    "version" : "0.5.3",
+    "version" : "0.5.4",
     "description" : "Call remote methods and callbacks with a JSON-based protocol. RMI for network sockets and the browser too!",
+    "main" : "./lib/dnode.js",
     "modules" : {
-        "index" : "./lib/dnode",
         "web" : "./lib/web"
+    },
+    "directories" : {
+        "lib" : "./lib"
     },
     "keywords" : [
         "message passing",

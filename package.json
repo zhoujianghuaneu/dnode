@@ -1,6 +1,6 @@
 {
     "name" : "dnode",
-    "version" : "0.5.5",
+    "version" : "0.5.6",
     "description" : "Call remote methods and callbacks with a JSON-based protocol. RMI for network sockets and the browser too!",
     "main" : "./lib/dnode.js",
     "modules" : {
@@ -24,7 +24,7 @@
     "dependencies" : {
         "socket.io" : ">=0.6.1",
         "lazy" : ">=1.0.1",
-        "traverse" : ">=0.2.0 && <0.3.0",
+        "traverse" : ">=0.3.1",
         "hashish" : ">=0.0.2",
         "recon" : ">=0.0.5"
     },

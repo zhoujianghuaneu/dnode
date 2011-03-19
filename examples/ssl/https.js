@@ -20,7 +20,7 @@ catch (e) {
 
 var connect = require('connect');
 var https = connect.createServer();
-https.use(connect.staticProvider(__dirname + '/static'));
+https.use(connect.static(__dirname + '/static'));
 https.setSecure(cert);
 https.listen(8020);
 

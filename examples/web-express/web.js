@@ -2,7 +2,7 @@
 var express = require('express');
 
 var server = express.createServer(
-    express.staticProvider(__dirname)
+    express.static(__dirname)
 );
 server.listen(6857);
 console.log('http://localhost:6857/');

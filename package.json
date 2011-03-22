@@ -1,6 +1,6 @@
 {
     "name" : "dnode",
-    "version" : "0.5.8",
+    "version" : "0.5.9",
     "description" : "Call remote methods and callbacks with a JSON-based protocol. RMI for network sockets and the browser too!",
     "main" : "./lib/dnode.js",
     "modules" : {
@@ -28,6 +28,8 @@
         "hashish" : ">=0.0.2",
         "recon" : ">=0.0.5"
     },
-    "engine" : ["node >=0.2.0"],
+    "engine" : {
+        "node" : ">=0.4.0"
+    },
     "author": "James Halliday <mail@substack.net> (http://substack.net/)"
 }

@@ -1,5 +1,6 @@
 var dnode = require('../')
 var test = require('tap').test;
+var util = require('util');
 
 test('simple', function (t) {
     t.plan(3);
@@ -11,7 +12,7 @@ test('simple', function (t) {
             reply(n.number * 10);
         },
         print : function (n,reply) {
-            reply(sys.inspect(n));
+            reply(util.inspect(n));
         },
     }).listen(port);
     

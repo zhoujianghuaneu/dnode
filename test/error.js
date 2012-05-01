@@ -1,5 +1,4 @@
 var dnode = require('../');
-var sys = require('sys');
 var test = require('tap').test;
 
 test('errors', function (t) {
@@ -99,4 +98,15 @@ test('close same server twice shouldn\'t throw errors', function(t) {
         server.close();
     });
     server.listen(port);
-})
+});
+
+test('bad connection string', function(t) {
+    try {
+        var client = dnode.connect('garbage', function (remote, conn) {
+            assert.fail('should have been refused, very unlikely');
+        });
+    } catch (err) {
+        t.ok(/Could not create a stream/.test(err.message));
+        t.end();
+    }
+});

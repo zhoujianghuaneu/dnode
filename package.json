@@ -1,6 +1,6 @@
 {
     "name" : "dnode",
-    "version" : "0.9.11",
+    "version" : "0.9.12",
     "description" : "freestyle RPC",
     "main" : "./index.js",
     "keywords" : [
@@ -39,7 +39,7 @@
     },
     "browserify" : "browser/index.js",
     "engine" : {
-        "node" : ">=0.4.0"
+        "node" : ">=0.6.0"
     },
     "author" : {
         "name" : "James Halliday",

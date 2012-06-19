@@ -35,7 +35,7 @@ test('middleware', function (t) {
     });
     
     server.on('local', function (client, conn) {
-        this.moo = true;
+        client.moo = true;
         conn.on('remote', function () {
             clearTimeout(tc);
         });

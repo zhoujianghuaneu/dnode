@@ -1,17 +1,11 @@
 {
     "name" : "dnode",
-    "version" : "0.9.12",
-    "description" : "freestyle RPC",
+    "version" : "1.0.0",
+    "description" : "freestyle rpc",
     "main" : "./index.js",
     "keywords" : [
-        "message passing",
         "rpc",
-        "rmi",
-        "drb",
-        "remote",
-        "communication",
-        "websockets",
-        "socket.io"
+        "callbacks"
     ],
     "repository" : {
         "type" : "git",
@@ -22,8 +16,6 @@
         "examples" : "./examples"
     },
     "dependencies" : {
-        "socket.io" : "0.8.6",
-        "socket.io-client" : "https://github.com/substack/socket.io-client/tarball/master",
         "lazy" : ">=1.0.5 <1.1",
         "dnode-protocol" : "~0.1.2",
         "jsonify" : "0.0.x"

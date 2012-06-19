@@ -72,7 +72,7 @@ test('tls', function (t) {
             if (data == 'C') clearTimeout(CB);
             if (data == 'D') clearTimeout(DB);
         })
-    }).on('ready',function(){
+    }).on('listening',function(){
         var tlsStream = tls.connect(ports[1], optionsC, function () {
             C.connect(tlsStream, function(remote, con){
                 remote.name(function (data) {

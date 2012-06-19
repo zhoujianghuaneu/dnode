@@ -8,7 +8,7 @@ test('broadcast', function (t) {
     
     var em = new EventEmitter;
     var server = dnode(function (client,conn) {
-        conn.on('ready', function () {
+        conn.on('listening', function () {
             em.on('message', client.message);
         });
         
@@ -23,7 +23,7 @@ test('broadcast', function (t) {
     
     var recv = { 0 : [], 1 : [], 2 : [] };
     
-    server.on('ready', function () {
+    server.on('listening', function () {
         dnode({
             name : '#0',
             message : function (msg) { recv[0].push(msg) },

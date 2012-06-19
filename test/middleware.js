@@ -21,7 +21,7 @@ test('middleware', function (t) {
         t.ok(!conn.zing);
         t.ok(!client.moo);
         
-        conn.on('ready', (function () {
+        conn.on('listening', (function () {
             clearTimeout(tr);
             t.ok(conn.zing);
             t.ok(this.moo);
@@ -36,12 +36,12 @@ test('middleware', function (t) {
     
     server.use(function (client, conn) {
         this.moo = true;
-        conn.on('ready', function () {
+        conn.on('listening', function () {
             clearTimeout(tc);
         });
     });
     
-    server.on('ready', function () {
+    server.on('listening', function () {
         dnode.connect(port, function (remote, conn) {
             clearTimeout(tf);
             t.ok(remote.baz);

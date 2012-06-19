@@ -10,14 +10,14 @@ test('recon', function (t) {
     
     var server = dnode(function (remote, conn) {
         scounts.connect ++;
-        conn.on('ready', function () {
+        conn.on('listening', function () {
             scounts.ready ++;
         });
     }).listen(port);
     
     dnode(function (remote, conn) {
         ccounts.connect ++;
-        conn.on('ready', function () {
+        conn.on('listening', function () {
             ccounts.ready ++;
             setTimeout(function () {
                 if (ccounts.ready >= 4) {

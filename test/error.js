@@ -43,7 +43,7 @@ test('errors', function (t) {
         }
     });
     
-    server.on('ready', function () {
+    server.on('listening', function () {
         var client = dnode(function (client, conn) {
             conn.on('error', function (err) {
                 errors.client.push(err);
@@ -88,7 +88,7 @@ test('refused', function (t) {
 test('close same server twice shouldn\'t throw errors', function(t) {
     var port = Math.floor(Math.random() * 40000 + 10000);
     var server = dnode();
-    server.on('ready', function() {
+    server.on('listening', function() {
         server.once('close', function() {
             server.once('close', function() {
                 t.end();

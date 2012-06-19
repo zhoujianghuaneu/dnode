@@ -56,6 +56,7 @@ dnode.prototype.listen = function () {
     
     // just copy over the opts and cons, the rest will need to be re-created
     var cons = self.cons, opts = self.opts;
+    self.cons = function () {};
     self.end();
     
     var params = parseArgs(arguments);

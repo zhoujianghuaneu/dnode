@@ -1,5 +1,6 @@
 var dnode = require('../');
 var test = require('tap').test;
+var destroy = require('./lib/destroy');
 
 test('errors', function (t) {
     t.plan(4);
@@ -8,6 +9,7 @@ test('errors', function (t) {
     
     var server = dnode(function (remote, conn) {
         conn.on('error', function (err) {
+console.log('ERR! ' + err); 
             errors.server.push(err);
         });
         
@@ -24,12 +26,7 @@ test('errors', function (t) {
         };
     }).listen(port);
     
-    var ts = setTimeout(function () {
-        t.fail('server never ended');
-    }, 5000);
-    
-    server.on('end', function () {
-        clearTimeout(ts);
+    server.on('close', function () {
         t.deepEqual(errors.server[0], 'string throw');
         
         try { undefined.name }
@@ -46,6 +43,7 @@ test('errors', function (t) {
     server.on('listening', function () {
         var client = dnode(function (client, conn) {
             conn.on('error', function (err) {
+console.log('C error: ' + err); 
                 errors.client.push(err);
             });
             
@@ -63,13 +61,13 @@ test('errors', function (t) {
             
             setTimeout(function () {
                 conn.end();
-                server.end();
-                server.close();
+                destroy(server);
             }, 500);
         });
     });
 });
 
+/*
 test('refused', function (t) {
     t.plan(2);
     
@@ -110,3 +108,4 @@ test('bad connection string', function(t) {
         t.end();
     }
 });
+*/

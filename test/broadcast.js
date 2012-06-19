@@ -1,14 +1,15 @@
 var dnode = require('../');
 var EventEmitter = require('events').EventEmitter;
 var test = require('tap').test;
+var destroy = require('./lib/destroy');
 
 test('broadcast', function (t) {
     t.plan(3);
     var port = Math.floor(Math.random() * 40000 + 10000);
     
     var em = new EventEmitter;
-    var server = dnode(function (client,conn) {
-        conn.on('listening', function () {
+    var server = dnode(function (client, conn) {
+        conn.on('ready', function () {
             em.on('message', client.message);
         });
         
@@ -53,8 +54,8 @@ test('broadcast', function (t) {
     });
     
     setTimeout(function () {
-        server.end();
-        server.close();
+        destroy(server);
+        
         t.deepEqual(
             recv[0],
             [ '#0 says: hello!', '#1 says: hey', '#2 says: wowsy' ],

@@ -43,6 +43,7 @@ D.prototype.connect = function () {
         self.emit('error', err);
     });
     
+    self.id = randomId();
     self.stream = stream;
     stream.pipe(self);
     self.pipe(stream);

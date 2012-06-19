@@ -37,11 +37,7 @@ D.prototype.connect = function () {
         throw new Error('no port or unix path given');
     }
     
-    if (params.block) {
-        self.on('remote', function () {
-            params.block.call(client.instance, client.remote, client);
-        });
-    }
+    if (params.block) self.on('remote', params.block);
     
     stream.on('error', function (err) {
         self.emit('error', err);

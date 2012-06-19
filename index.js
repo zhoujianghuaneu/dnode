@@ -4,6 +4,7 @@ var http = require('http');
 var EventEmitter = require('events').EventEmitter;
 
 var protocol = require('dnode-protocol');
+var parseArgs = require('./lib/parse_args');
 var Lazy = require('lazy');
 
 exports = module.exports = dnode;
@@ -25,7 +26,7 @@ dnode.prototype.use = function (middleware) {
 };
 
 dnode.prototype.connect = function () {
-    var params = protocol.parseArgs(arguments);
+    var params = parseArgs(arguments);
     var stream = params.stream;
     var client = null;
     var self   = this;  
@@ -138,7 +139,7 @@ dnode.prototype.connect = function () {
 
 dnode.prototype.listen = function () {
     var self = this;
-    var params = protocol.parseArgs(arguments);
+    var params = parseArgs(arguments);
     var server = params.server;
     
     if (params.port) {

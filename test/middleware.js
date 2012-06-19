@@ -21,7 +21,7 @@ test('middleware', function (t) {
         t.ok(!conn.zing);
         t.ok(!client.moo);
         
-        conn.on('listening', (function () {
+        conn.on('remote', (function () {
             clearTimeout(tr);
             t.ok(conn.zing);
             t.ok(this.moo);
@@ -30,13 +30,13 @@ test('middleware', function (t) {
         this.baz = 42;
     }).listen(port);
     
-    server.use(function (client, conn) {
+    server.on('local', function (client, conn) {
         conn.zing = true;
     });
     
-    server.use(function (client, conn) {
+    server.on('local', function (client, conn) {
         this.moo = true;
-        conn.on('listening', function () {
+        conn.on('remote', function () {
             clearTimeout(tc);
         });
     });

@@ -1,4 +1,4 @@
-var dnode = require('../../lib/dnode');
+var dnode = require('../../');
 var net = require('net');
 
 var server = net.createServer(function (c) {

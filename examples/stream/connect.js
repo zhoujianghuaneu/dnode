@@ -1,7 +1,7 @@
-var dnode = require('../../lib/dnode');
+var dnode = require('../../');
 var net = require('net');
 
-var d = new dnode();
+var d = dnode();
 d.on('remote', function (remote) {
     remote.transform('beep', function (s) {
         console.log('beep => ' + s);

@@ -56,6 +56,7 @@ D.prototype.connect = function () {
     if (params.block) self.on('remote', params.block);
     
     stream.on('error', function (err) {
+        if (err && err.code === 'EPIPE') return; // eat EPIPEs
         self.emit('error', err);
     });
     
@@ -93,6 +94,11 @@ dnode.prototype.listen = function () {
         
         d.on('remote', function (remote) {
             server.emit('remote', remote, d);
+        });
+        
+        stream.on('error', function (err) {
+            if (err && err.code === 'EPIPE') return; // eat EPIPEs
+            d.emit('error', err);
         });
         
         d.stream = stream;

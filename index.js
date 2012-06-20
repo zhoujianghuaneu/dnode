@@ -2,6 +2,7 @@ var dnode = require('./lib/dnode');
 var parseArgs = require('./lib/parse_args');
 var net = require('net');
 var util = require('util');
+var weak = require('weak');
 
 exports = module.exports = function (cons, opts) {
     return new D(cons, opts);
@@ -19,7 +20,22 @@ exports.listen = function () {
 
 util.inherits(D, dnode);
 function D (cons, opts) {
-    return dnode.call(this, cons, opts);
+    var self = this;
+    if (!opts) opts = {};
+    
+    if (opts.weak !== false && !opts.proto) {
+        opts.proto = {};
+        opts.proto.wrap = function (cb, id) {
+            return weak(cb, function () {
+                self.proto.cull(id);
+            });
+        };
+        opts.proto.unwrap = function (ref, id) {
+            var cb = weak.get(ref);
+            return cb || function () {};
+        };
+    }
+    return dnode.call(self, cons, opts);
 }
 
 D.prototype.connect = function () {

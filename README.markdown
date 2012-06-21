@@ -118,8 +118,9 @@ NOTE: This sockjs interface is presently pending:
 [sockjs-client/pull/76](https://github.com/sockjs/sockjs-client/pull/76)
 [sockjs-node/pull/77](https://github.com/sockjs/sockjs-node/pull/77)
 
-Check example/sockjs/ for the package.json entries needed so you can use right
-away.
+For now, put
+[these entries](https://github.com/substack/dnode/blob/master/example/sockjs/package.json#L5-L6)
+into your package.json.
 
 First whip up a server:
 

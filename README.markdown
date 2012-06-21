@@ -145,7 +145,7 @@ sock.on('connection', function (stream) {
 sock.installHandlers(server, { prefix : '/dnode' });
 ```
 
-Then write som browser code:
+Then write some browser code:
 
 ``` js
 var domready = require('domready');

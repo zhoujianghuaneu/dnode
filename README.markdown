@@ -105,16 +105,16 @@ $ node client.js
 beep => BOOP
 ```
 
-using socksjs in the browser
+using sockjs in the browser
 ----------------------------
 
 Since dnode instances are just readable/writable streams, you can use them with
 any streaming transport, including in the browser!
 
 This example uses the streaming interface provided by
-[socksjs](http://sockjs.org/).
+[sockjs](http://sockjs.org/).
 
-NOTE: This socksjs interface is presently pending:
+NOTE: This sockjs interface is presently pending:
 [sockjs-client/pull/76](https://github.com/sockjs/sockjs-client/pull/76)
 [sockjs-node/pull/77](https://github.com/sockjs/sockjs-node/pull/77)
 

@@ -1,44 +1,29 @@
-#!/usr/bin/env node
-// Serve an object with authentication
-
-var DNode = require('dnode');
-var sys = require('sys');
+var dnode = require('dnode');
 var fs = require('fs');
+var net = require('net');
 
-var quotes = JSON.parse(
-    fs.readFileSync(__dirname + '/quotes.json').toString()
-);
-
-// Serve up a Session object only after the client supplies the valid user/pass
-DNode(function (client, connection) {
-    this.authenticate = function (user, pass, cb) {
-        if (user == 'moo' && pass == 'hax') {
-            sys.puts('Sign in as ' + sys.inspect(user) + ' succeeded!');
-            cb(new Session({
-                user : user,
-                client : client,
-                connection : connection,
-            }));
-        }
-        else {
-            sys.puts('Sign in as ' + sys.inspect(user) + ' failed!');
-            cb(null);
-        }
-    };
-}).listen(7007);
-
-// Clients who connect get an instance of this session object:
-function Session (params) {
-    var conn = params.connection;
-    var user = params.user;
-    var client = params.client;
-    
-    conn.addListener('end', function () {
-        sys.puts('User ' + sys.inspect(user) + ' disconnected');
-    });
-    
-    this.quote = function (f) {
-        var i = Math.floor(Math.random() * quotes.length);
-       f(quotes[i]);
-    };
+var secretQuotes = require('./quotes.json');
+function randomQuote (cb) {
+    var ix = Math.floor(Math.random() * secretQuotes.length);
+    cb(secretQuotes[ix]);
 }
+
+var server = net.createServer(function (stream) {
+    var d = dnode({ auth : auth });
+    d.pipe(stream).pipe(d);
+    
+    function auth (user, pass, cb) {
+        if (typeof cb !== 'function') return;
+        
+        if (user === 'moo' && pass === 'hax') {
+            console.log('signed in: ' + user);
+            d.on('end', function () {
+                console.log('disconnected: ' + user);
+            });
+            
+            cb(null, { quote : randomQuote });
+        }
+        else cb('ACCESS DENIED')
+    }
+});
+server.listen(7007);

@@ -1,30 +1,24 @@
-#!/usr/bin/env node
-// Connect to the auth server and display a quote from it.
-
-var DNode = require('dnode');
-var sys = require('sys');
+var dnode = require('dnode');
 
 if (process.argv.length < 4) {
-    sys.puts('Usage: ./client.js user pass');
-    process.exit();
+    return console.error('Usage: ./client.js user pass');
 }
 
 var user = process.argv[2];
 var pass = process.argv[3];
 
-DNode.connect(7007, function (remote,conn) {
-    remote.authenticate(user, pass, function (session) {
-        if (session) {
-            sys.puts('Authentication success');
-            session.quote(function (q) {
-                sys.puts('\nAnd now for a quote by ' + q.who + ':\n\n');
-                sys.puts(q.quote + '\n\n');
-                conn.end();
-            });
+var d = dnode.connect(7007);
+d.on('remote', function (remote) {
+    remote.auth(user, pass, function (err, session) {
+        if (err) {
+            console.error(err);
+            return d.end();
         }
-        else {
-            sys.puts('Authentication failure');
-            conn.end();
-        }
+        
+        session.quote(function (q) {
+            console.log('And now for a quote by ' + q.who + ':\n');
+            console.log(q.quote + '\n');
+            d.end();
+        });
     });
 });

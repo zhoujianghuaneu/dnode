@@ -1,10 +1,10 @@
 var domready = require('domready');
-var sockjs = require('sockjs');
+var shoe = require('shoe');
 var dnode = require('../../');
 
 domready(function () {
     var result = document.getElementById('result');
-    var stream = sockjs('/dnode');
+    var stream = shoe('/dnode');
     
     var d = dnode();
     d.on('remote', function (remote) {

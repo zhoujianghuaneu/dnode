@@ -21,8 +21,8 @@
         "weak" : "~0.2.1"
     },
     "devDependencies" : {
-        "tap" : "~0.2.4",
-        "browserify" : "~1.10.7"
+        "tap" : "~0.2.5",
+        "browserify" : "~1.13.0"
     },
     "scripts" : {
         "test" : "tap test/*.js"

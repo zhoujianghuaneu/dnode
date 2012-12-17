@@ -1,10 +1,8 @@
 var dnode = require('../')
-var test = require('tap').test;
-var util = require('util');
+var test = require('tape');
 
 test('self-referential', function (t) {
-    t.plan(6);
-    var port = Math.floor(Math.random() * 40000 + 10000);
+    t.plan(7);
     
     var server = dnode({
         timesTen : function (n,reply) {
@@ -18,21 +16,19 @@ test('self-referential', function (t) {
             t.strictEqual(n[3],n);
             reply(n);
         },
-    }).listen(port);
+    });
     
-    server.on('listening', function () {
-        dnode.connect(port, function (remote, conn) {
-            t.equal(conn.stream.remoteAddress, '127.0.0.1');
-            var args = [1,2,3]
-            args.push(args)
-            
-            remote.print(args, function (m) {
-                t.equal(util.inspect(m), util.inspect(args));
-                
-                conn.end();
-                server.close();
-                t.end();
-            });
+    var client = dnode();
+    client.on('remote', function (remote) {
+        var args = [1,2,3]
+        args.push(args)
+        
+        remote.print(args, function (m) {
+            t.same(m.slice(0,3), args.slice(0,3));
+            t.equal(m, m[3]);
+            t.equal(args, args[3]);
         });
     });
+    
+    client.pipe(server).pipe(client);
 });

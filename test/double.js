@@ -1,5 +1,5 @@
 var dnode = require('../');
-var test = require('tap').test;
+var test = require('tape');
 
 test('double', function (t) {
     t.plan(4);
@@ -13,28 +13,26 @@ test('double', function (t) {
                 })
             })
         }
-    }).listen(port);
+    });
     
-    server.on('listening', function () {
-        dnode.connect(port, function (remote, conn) {
-            remote.z(
-                function (x,f) { f(x * 2) },
-                function (x,f) { f(x / 2) },
-                function (x,y) {
-                    t.equal(x, 20, 'double, not equal');
-                    t.equal(y, 5, 'double, not equal');
-                }
-            );
-            
-            function plusTen(n,f) { f(n + 10) }
-            
-            remote.z(plusTen, plusTen, function (x,y) {
-                t.equal(x, 20, 'double, equal');
-                t.equal(y, 20, 'double, equal');
-                conn.end();
-                server.close();
-                t.end();
-            });
+    var client = dnode();
+    client.on('remote', function (remote) {
+        remote.z(
+            function (x,f) { f(x * 2) },
+            function (x,f) { f(x / 2) },
+            function (x,y) {
+                t.equal(x, 20, 'double, not equal');
+                t.equal(y, 5, 'double, not equal');
+            }
+        );
+        
+        function plusTen(n,f) { f(n + 10) }
+        
+        remote.z(plusTen, plusTen, function (x,y) {
+            t.equal(x, 20, 'double, equal');
+            t.equal(y, 20, 'double, equal');
         });
     });
+    
+    client.pipe(server).pipe(client);
 });

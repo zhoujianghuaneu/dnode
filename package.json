@@ -21,10 +21,10 @@
         "tape" : "~0.1.1"
     },
     "scripts" : {
-        "test" : "tap test/*.js"
+        "test" : "tap test/*.js test/server/*.js"
     },
     "testling" : {
-        "files" : ["test/args.js"],
+        "files" : "test/*.js",
         "browsers" : {
             "iexplore" : [ "6.0", "7.0", "8.0", "9.0" ],
             "chrome" : [ "20.0" ],

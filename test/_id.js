@@ -1,18 +1,13 @@
 var dnode = require('../');
-var test = require('tap').test;
+var test = require('tape');
 
 test('_id', function (t) {
     t.plan(1);
-    var port = Math.floor(Math.random() * 40000 + 10000);
     
-    var server = dnode({ _id : 1337 }).listen(port);
-    
-    server.on('listening', function () {
-        dnode.connect(port, function (remote, conn) {
-            t.equal(remote._id, 1337);
-            conn.end();
-            server.close();
-            t.end();
-        });
+    var server = dnode({ _id : 1337 });
+    var client = dnode();
+    client.on('remote', function (remote, conn) {
+        t.equal(remote._id, 1337);
     });
+    client.pipe(server).pipe(client);
 });

@@ -1,4 +1,4 @@
-var dnode = require('../')
+var dnode = require('../../')
 var test = require('tap').test;
 var util = require('util');
 

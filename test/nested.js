@@ -1,48 +1,46 @@
 var dnode = require('../');
-var test = require('tap').test;
+var test = require('tape');
+var EventEmitter = require('events').EventEmitter;
 
 test('nested', function (t) {
     t.plan(4);
-    var port = Math.floor(Math.random() * 40000 + 10000);
     
-    var EventEmitter = require('events').EventEmitter;
+    var server1 = function () {
+        return dnode({
+            timesTen : function (n,reply) { reply(n * 10) }
+        });
+    };
     
-    var server1 = dnode({
-        timesTen : function (n,reply) { reply(n * 10) }
-    }).listen(port);
-    
-    var server2 = dnode({
-        timesTwenty : function (n,reply) { reply(n * 20) }
-    }).listen(port + 1);
+    var server2 = function () {
+        return dnode({
+            timesTwenty : function (n,reply) { reply(n * 20) }
+        });
+    };
     
     var moo = new EventEmitter;
     
-    // Don't worry, real code does't look like this:
-    server1.on('listening', function () {
-        server2.on('listening', function () {
-            dnode.connect(port, function (remote1, conn1) {
-                dnode.connect(port + 1, function (remote2, conn2) {
-                    moo.on('hi', function (x) {
-                        remote1.timesTen(x, function (res) {
-                            t.equal(res, 5000, 'emitted value times ten');
-                            remote2.timesTwenty(res, function (res2) {
-                                t.equal(res2, 100000, 'result times twenty');
-                                conn1.end(); conn2.end();
-                                server1.close(); server2.close();
-                                t.end();
-                            });
-                        });
-                    });
-                    remote2.timesTwenty(5, function (n) {
-                        t.equal(n, 100);
-                        remote1.timesTen(0.1, function (n) {
-                            t.equal(n, 1);
-                        });
+    var client1 = dnode();
+    client1.on('remote', function (remote1, conn1) {
+        var client2 = dnode();
+        client2.on('remote', function (remote2, conn2) {
+            moo.on('hi', function (x) {
+                remote1.timesTen(x, function (res) {
+                    t.equal(res, 5000, 'emitted value times ten');
+                    remote2.timesTwenty(res, function (res2) {
+                        t.equal(res2, 100000, 'result times twenty');
                     });
                 });
             });
+            remote2.timesTwenty(5, function (n) {
+                t.equal(n, 100);
+                remote1.timesTen(0.1, function (n) {
+                    t.equal(n, 1);
+                });
+            });
         });
+        client2.pipe(server2()).pipe(client2);
     });
+    client1.pipe(server1()).pipe(client1);
     
     setTimeout(function() {
         moo.emit('hi', 500);

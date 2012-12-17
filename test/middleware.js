@@ -1,10 +1,9 @@
 var dnode = require('../');
-var test = require('tap').test;
+var test = require('tape');
 
 test('middleware', function (t) {
     t.plan(5);
     
-    var port = Math.floor(Math.random() * 40000 + 10000);
     var tf = setTimeout(function () {
         t.fail('never finished');
     }, 1000);
@@ -28,7 +27,7 @@ test('middleware', function (t) {
         }).bind(this));
         
         this.baz = 42;
-    }).listen(port);
+    });
     
     server.on('local', function (client, conn) {
         conn.zing = true;
@@ -41,13 +40,11 @@ test('middleware', function (t) {
         });
     });
     
-    server.on('listening', function () {
-        dnode.connect(port, function (remote, conn) {
-            clearTimeout(tf);
-            t.ok(remote.baz);
-            conn.end();
-            server.close();
-            t.end();
-        });
+    var client = dnode();
+    client.on('remote', function (remote, conn) {
+        clearTimeout(tf);
+        t.ok(remote.baz);
     });
+    
+    server.pipe(client).pipe(server);
 });

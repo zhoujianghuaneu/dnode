@@ -1,7 +1,4 @@
-dnode
-=====
-
-![dnode: freestyle rpc](http://substack.net/images/dnode.png)
+# dnode
 
 dnode is an asynchronous rpc system for node.js that lets you
 call remote functions.
@@ -10,13 +7,15 @@ You can pass callbacks to remote functions, and the remote end can call
 the functions you passed in with callbacks of its own and so on.
 It's callbacks all the way down!
 
+[![browser support](http://ci.testling.com/substack/dnode.png)](http://ci.testling.com/substack/dnode)
+
 [![build status](https://secure.travis-ci.org/substack/dnode.png)](http://travis-ci.org/substack/dnode)
 
-example
-=======
+![dnode: freestyle rpc](http://substack.net/images/dnode.png)
 
-listen and connect
-------------------
+# example
+
+## listen and connect
 
 server:
 
@@ -53,8 +52,7 @@ $ node client.js
 beep => BOOP
 ```
 
-streaming
----------
+## streaming
 
 The `.connect()` and `.listen()` calls in the previous example are just
 convenience methods for piping to and from readable/writable streams.
@@ -105,8 +103,7 @@ $ node client.js
 beep => BOOP
 ```
 
-dnode in the browser
---------------------
+## dnode in the browser
 
 Since dnode instances are just readable/writable streams, you can use them with
 any streaming transport, including in the browser!
@@ -181,15 +178,13 @@ You should see `beep => BOOP` on the page!
 Check out the
 [complete shoe example](https://github.com/substack/dnode/tree/master/example/shoe).
 
-methods
-=======
+# methods
 
 ``` js
 var dnode = require('dnode')
 ```
 
-var d = dnode(cons, opts={})
-----------------------------
+## var d = dnode(cons, opts={})
 
 Create a new readable/writable dnode stream object `d`.
 All the usual stream methods are at your disposal: pipe(), write(), end().
@@ -203,8 +198,7 @@ automatically. This behavior prevents memory leaks in long-running connections.
 
 You can turn weakmaps off by setting `opts.weak = false`.
 
-d.connect(...)
---------------
+## d.connect(...)
 
 This method is a shortcut for setting up a pipe between `d` and a new
 `net.connect()` stream.
@@ -217,13 +211,11 @@ If you pass a callback in as an argument, it will be added as a listener to the
 
 Returns the `d` object.
 
-dnode.connect(...)
-------------------
+## dnode.connect(...)
 
 Shortcut to create a connection without a constructor.
 
-d.listen(...)
--------------
+## d.listen(...)
 
 This method is a shortcut for setting up a `net.createServer()` and piping
 network streams to and from new dnode streams.
@@ -234,49 +226,41 @@ arguments.
 Returns a net server object that will also emit `'local'` and `'remote'` events
 from the underlying dnode streams..
 
-dnode.listen(...)
------------------
+## dnode.listen(...)
 
 Shortcut to create a listener without a constructor.
 
-events
-======
+# events
 
-d.on('remote', cb)
-------------------
+## d.on('remote', cb)
 
 This event fires with `cb(remote, d)` when the remote side of the connection
 has constructed its instance.
 
-d.on('local', cb)
------------------
+## d.on('local', cb)
 
 This event fires right after the constructed instance has been created locally
 but before it gets sent to the remote end so you can modify the ref object.
 
 This event fires with `cb(ref, d)` where `ref` is the local instance object.
 
-d.on('fail', cb)
-----------------
+## d.on('fail', cb)
 
 This event fires when the remote end causes errors in the protocol layer.
 
 These are non-fatal and can probably be ignored but you could also terminate the
 connection here.
 
-d.on('error', cb)
------------------
+## d.on('error', cb)
 
 This event fires when local code causes errors in its callbacks.
 Not all errors can be caught here since some might be in async functions.
 
-d.on('end', cb)
----------------
+## d.on('end', cb)
 
 This event fires when the input stream finishes.
 
-install
-=======
+# install
 
 With [npm](http://npmjs.org) do:
 
@@ -284,14 +268,12 @@ With [npm](http://npmjs.org) do:
 npm install dnode
 ```
 
-protocol
-========
+# protocol
 
 dnode uses a newline-terminated JSON protocol
 [documented in the dnode-protocol project](https://github.com/substack/dnode-protocol/blob/master/doc/protocol.markdown#the-protocol).
 
-dnode in other languages
-========================
+# dnode in other languages
 
 These libraries implement the dnode protocol too so you can make RPC calls
 between scripts written in different languages.
@@ -302,8 +284,7 @@ between scripts written in different languages.
 * [dnode-php-sync-client](https://github.com/erasys/dnode-php-sync-client)
 * [dnode-java](https://github.com/aslakhellesoy/dnode-java)
 
-shameless plug
-==============
+# shameless plug
 
 Want to make sure your crazy javascript-heavy app still works in other
 browsers?

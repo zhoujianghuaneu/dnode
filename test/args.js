@@ -1,6 +1,4 @@
-var test;
-try { test = require('tap').test; }
-catch (e) { test = require('testling') }
+var test = require('tape');
 
 var parseArgs = require('../lib/parse_args');
 

@@ -8,9 +8,9 @@ test('emit events', function (t) {
     var subs = [];
     function publish (name) {
         var args = [].slice.call(arguments, 1);
-        subs.forEach(function (sub) {
-            sub.emit(name, args);
-        });
+        for (var i = 0; i < subs.length; i++) {
+            subs[i].emit(name, args);
+        }
     }
     
     var server = function () {
@@ -45,7 +45,7 @@ test('emit events', function (t) {
     x.on('remote', function (remote) {
         var em = new EventEmitter;
         em.on('data', function (n) { xs.push(n) });
-        remote.subscribe(em.emit.bind(em));
+        remote.subscribe(function () { return em.emit.apply(em, arguments) });
     });
     x.pipe(server()).pipe(x);
     
@@ -54,7 +54,7 @@ test('emit events', function (t) {
     y.on('remote', function (remote) {
         var em = new EventEmitter;
         em.on('data', function (n) { ys.push(n) });
-        remote.subscribe(em.emit.bind(em))
+        remote.subscribe(function () { return em.emit.apply(em, arguments) });
     });
     y.pipe(server()).pipe(y);
     

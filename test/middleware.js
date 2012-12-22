@@ -17,14 +17,15 @@ test('middleware', function (t) {
     }, 1000);
     
     var server = dnode(function (client, conn) {
+        var self = this;
         t.ok(!conn.zing);
         t.ok(!client.moo);
         
         conn.on('remote', (function () {
             clearTimeout(tr);
             t.ok(conn.zing);
-            t.ok(this.moo);
-        }).bind(this));
+            t.ok(self.moo);
+        });
         
         this.baz = 42;
     });

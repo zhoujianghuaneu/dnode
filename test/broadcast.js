@@ -1,6 +1,6 @@
 var dnode = require('../');
 var EventEmitter = require('events').EventEmitter;
-var test = require('tap').test;
+var test = require('tape');
 
 test('broadcast', function (t) {
     t.plan(3);

@@ -21,7 +21,7 @@ test('middleware', function (t) {
         t.ok(!conn.zing);
         t.ok(!client.moo);
         
-        conn.on('remote', (function () {
+        conn.on('remote', function () {
             clearTimeout(tr);
             t.ok(conn.zing);
             t.ok(self.moo);

@@ -31,25 +31,21 @@ test('emit events', function (t) {
     };
     
     setTimeout(function () {
+        var times = 0;
         var iv = setInterval(function () {
-            publish('data', Math.floor(Math.random() * 100));
+            if (++times === 5) {
+                t.deepEqual(xs, ys);
+                return clearInterval(iv);
+            }
+            else publish('data', Math.floor(Math.random() * 100));
         }, 20);
-        
-        t.on('end', function () {
-            clearInterval(iv);
-        });
     }, 20);
     
     var xs = [];
     var x = dnode();
     x.on('remote', function (remote) {
         var em = new EventEmitter;
-        em.on('data', function (n) {
-            if (xs.length === 6) {
-                t.deepEqual(xs, ys);
-            }
-            xs.push(n);
-        });
+        em.on('data', function (n) { xs.push(n) });
         remote.subscribe(function () { return em.emit.apply(em, arguments) });
     });
     x.pipe(server()).pipe(x);

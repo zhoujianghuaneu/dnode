@@ -61,5 +61,5 @@ test('emit events', function (t) {
     setTimeout(function () {
         t.ok(xs.length > 5);
         t.deepEqual(xs, ys);
-    }, 200);
+    }, 500);
 });

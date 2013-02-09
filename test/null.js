@@ -14,7 +14,7 @@ test('null', function (t) {
         sTimesTen : function (n, cb) {
             t.equal(n, 5);
             cb(n * 10, null);
-        },
+        }
     });
     
     var client = dnode();

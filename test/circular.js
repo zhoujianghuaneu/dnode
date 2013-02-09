@@ -13,7 +13,7 @@ test('circular refs', function (t) {
             ref.d = ref.c;
             
             f(ref);
-        },
+        }
     });
     
     var client = dnode();

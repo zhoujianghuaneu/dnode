@@ -6,7 +6,7 @@ test('refs', function (t) {
     
     var server = dnode({
         a : 1,
-        b : 2,
+        b : 2
     });
     
     var client = dnode();

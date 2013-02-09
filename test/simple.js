@@ -13,7 +13,7 @@ test('simple server and client', function (t) {
         sTimesTen : function (n, cb) {
             t.equal(n, 5);
             cb(n * 10);
-        },
+        }
     });
     
     var client = dnode();

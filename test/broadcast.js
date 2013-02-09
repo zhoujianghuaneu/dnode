@@ -26,7 +26,7 @@ test('broadcast', function (t) {
     
     var client0 = dnode({
         name : '#0',
-        message : function (msg) { recv[0].push(msg) },
+        message : function (msg) { recv[0].push(msg) }
     });
     client0.on('remote', function (remote) {
         setTimeout(function () {
@@ -37,7 +37,7 @@ test('broadcast', function (t) {
     
     var client1 = dnode({
         name : '#1',
-        message : function (msg) { recv[1].push(msg) },
+        message : function (msg) { recv[1].push(msg) }
     });
     client1.on('remote', function (remote) {
         setTimeout(function () {
@@ -48,7 +48,7 @@ test('broadcast', function (t) {
     
     var client2 = dnode({
         name : '#2',
-        message : function (msg) { recv[2].push(msg) },
+        message : function (msg) { recv[2].push(msg) }
     });
     client2.on('remote', function (remote) {
         setTimeout(function () {

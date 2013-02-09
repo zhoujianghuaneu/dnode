@@ -15,7 +15,7 @@ test('self-referential', function (t) {
             t.strictEqual(n[2],3);
             t.strictEqual(n[3],n);
             reply(n);
-        },
+        }
     });
     
     var client = dnode();

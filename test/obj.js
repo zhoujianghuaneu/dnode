@@ -6,7 +6,7 @@ test('object ref tests', function (t) {
     var obj = { a : 1, b : 2, f : function (n,g) { g(n * 20) } };
     
     var server = dnode({
-        getObject : function (f) { f(obj) },
+        getObject : function (f) { f(obj) }
     });
     
     var client = dnode();

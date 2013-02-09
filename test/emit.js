@@ -3,7 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 var dnode = require('../');
 
 test('emit events', function (t) {
-    t.plan(2);
+    t.plan(1);
     
     var subs = [];
     function publish (name) {
@@ -44,7 +44,12 @@ test('emit events', function (t) {
     var x = dnode();
     x.on('remote', function (remote) {
         var em = new EventEmitter;
-        em.on('data', function (n) { xs.push(n) });
+        em.on('data', function (n) {
+            if (xs.length === 6) {
+                t.deepEqual(xs, ys);
+            }
+            xs.push(n);
+        });
         remote.subscribe(function () { return em.emit.apply(em, arguments) });
     });
     x.pipe(server()).pipe(x);
@@ -57,9 +62,4 @@ test('emit events', function (t) {
         remote.subscribe(function () { return em.emit.apply(em, arguments) });
     });
     y.pipe(server()).pipe(y);
-    
-    setTimeout(function () {
-        t.ok(xs.length > 5);
-        t.deepEqual(xs, ys);
-    }, 500);
 });

@@ -1,4 +1,4 @@
-var dnode = require('../');
+var dnode = require('../../');
 var test = require('tap').test;
 
 test('port0', function (t) {

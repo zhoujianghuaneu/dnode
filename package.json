@@ -1,6 +1,6 @@
 {
     "name" : "dnode",
-    "version" : "1.0.4",
+    "version" : "1.0.5",
     "description" : "freestyle rpc",
     "main" : "./index.js",
     "keywords" : [

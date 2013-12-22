@@ -1,5 +1,5 @@
 var dnode = require('../../');
-var test = require('tap').test;
+var test = require('tape');
 
 test('listen on port 0', function (t) {
     t.plan(7);

@@ -1,5 +1,5 @@
 var dnode = require('../../')
-var test = require('tap').test;
+var test = require('tape');
 var util = require('util');
 
 test('simple', function (t) {

@@ -1,6 +1,6 @@
 var dnode = require('../../');
 var net = require('net');
-var test = require('tap').test;
+var test = require('tape');
 
 test('stream', function (t) {
     t.plan(2);

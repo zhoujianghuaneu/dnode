@@ -1,5 +1,5 @@
 var dnode = require('../../');
-var test = require('tap').test;
+var test = require('tape');
 
 test('null', function (t) {
     t.plan(7);

@@ -27,7 +27,6 @@
     "browsers" : [
       "ie/6..latest",
       "chrome/10","chrome/latest","chrome/canary",
-      "chrome/canary",
       "firefox/10","firefox/latest","firefox/nightly",
       "safari/latest",
       "opera/11.0..latest",
